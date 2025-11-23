@@ -1,54 +1,10 @@
-# Lilly Technical Challenge Documentation Template
+I first made a copy and loaded it to VS Code. Then went through what code was given to me so I could get an understanding of what I was dealing with before doing anything meaningful, I tested if the backend server was even working and I could see the data on my browser, so I ran it on my PC using the .\start.bat command. Then in my browser I typed http://localhost:8000/medicines. This let me confirm that the backend was actually running and returning the JSON data properly. Once I saw the medicines showing up in the browser, I knew the backend environment was set up correctly and I could actually start looking into the rest of the challenge.
+After that, I went through the backend code to understand what was already done. The main.py file basically had everything already set up: getting all medicines, getting a single one, adding, updating, deleting, and even the average price function. I tested each endpoint in the browser, like the GET for all medicines and the average price one, and all of them worked fine. When I added something, it also saved into the data.json updating and deleting also worked fine. Backend-wise, everything was already there and working.
+Next, I looked at the frontend. I opened it using Live Server and straight away the medicines showed up, which told me the frontend was talking to the backend correctly. It also handled missing values, like when a name is empty or when the price is null. It didn’t break or anything, so that requirement was already covered as well. Then I tested the add medicine form. I tried adding a few things and it worked smoothly — it updated on the screen immediately and stayed there after refreshing, so that it was definitely saving it to the backend.
+I checked the average price button too and that was working already. It hit the /average-price endpoint and displayed the result properly. So overall, most of the core features were already functioning straight out of the box.
+After making sure everything worked, I focused on improving the UI, because that’s where I could actually make changes. The first thing I added was a search bar so you can filter medicines by typing. I made sure the search updates live as you type, and then I styled it to fit with the rest of the page. 
+Then I made some visual improvements. I updated the button colours to match NHS blue, and on hover I changed it to a lighter NHS-looking blue to make it look more professional. 
+Later on, I decided to add update and delete features even though they weren’t required I added these buttons in the frontend, but instead of showing them all the time, I made it to only show when you click a specific medicine. That way the UI doesn’t look messy with buttons everywhere. Both of these refreshes the list automatically, so you always see the updated data.
+By the end, the project has everything worked: backend features, frontend features, search, update, delete, average price, better UI, and proper error handling. 
 
-*This documentation template serves as a place for you to discuss how you approached this challenge, any issues you faced & how you overcame them, or any other points that you feel would be relevant for the interviewers to know. The text in italics is here to guide you - feel free to remove it once you fill out each section!*
 
-***Not every section in this document is required. This is just a template to help get you started. Feel free to add or remove sections as you feel necessary.***
-
-## Approach
-
-To tackle this challenge, I followed a structured approach, breaking the objectives into smaller, manageable tasks. I started with setting up the backend and frontend communication to ensure data flow worked seamlessly. My order of work was as follows:
-- For the Backend, I verified that the backend API endpoints were functional and returning the expected data using Postman.
-- Frontend Integration:Focused on fetching and displaying data dynamically, ensuring error handling was in place for missing or invalid data.
-- User-Friendly Input Form: Created a form to send data to the backend, adding frontend validation to ensure smooth user interactions.
-- Design Enhancements: Worked on improving the overall UI, focusing on responsiveness, visual appeal, and a user-centered layout.
-- Testing and Debugging: Ensured all functionality worked as expected.
-
-## Objectives - Innovative Solutions
-
-- objective1: Fetch Data and Display It
-I implemented dynamic fetching of medicines from the backend, ensuring the data displayed handled edge cases like missing names or prices. Default placeholders like "Unknown Medicine" or "Price not available" were used to maintain user-friendly messaging. The medicine list was styled with card-like elements for better readability.
-
-- objective2: Handling Missing/Invalid Data
-This was achieved through both frontend and backend validation:
-Frontend: Added conditional checks to handle empty or null values, displaying meaningful placeholders instead of breaking the UI.
-Backend: Integrated validation to ensure that only valid data could be added to the database.
-
-- objective3: User-Friendly Input Form
-The form was designed with simplicity and responsiveness in mind. It included:
-Real-time input validation.
-Feedback messages for successful or failed submissions.
-
-- objective4: Design Enhancements
-A clean and modern design was implemented:
-Rounded corners, shadows, and spacing for better visual appeal. Centered layout for both form and medicine list, ensuring responsiveness. Improved font hierarchy and color scheme to guide user attention.
-
-## Problems Faced
-
-- Empty or Invalid Data:
-Problem: Some medicines in the database had missing names or null prices.
-
-Solution: Implemented conditional rendering on the frontend and backend-side validation to avoid adding such data in the future.
-
-- Form Visibility:
-Problem: The form wasn't displaying initially due to a missing <form> element in the index.html.
-
-Solution: Updated the HTML structure to include the form and verified its placement using browser developer tools.
-
-- Design Consistency:
-Problem: The initial design lacked cohesion, and elements didn’t align well.
-
-Solution: Applied consistent padding, margins, and alignment through CSS, and used a maximum width for centered layouts.
-
-## Evaluation
-
-This was an enjoyable challenge to showcase my full-stack skills. While backend integration was smooth, missing / null data handling needed few iterations to be perfect. I was able to create simple designs with round parts, centered pages and responsive features. Due to lack of time, I could not achieve advanced features like search and filtering. Figuring out how to resolve CORS, to sync various design elements, and to validate form fields were not easy, but they are all valuable experiences. On the whole, happy with results and would capture functionality and attempt automated testing for added value with more time at my disposal. It was an experience that showed how I have the capacity to adapt and be a problem solver, to deliver a working, user-friendly application in a short period of time.
