@@ -74,7 +74,7 @@ form input {
 
 form button {
     padding: 10px 20px;
-    background: #414141;
+    background: #005EB8;
     color: #fff;
     border: none;
     border-radius: 10px; 
@@ -88,7 +88,8 @@ form button {
 }
 
 form button:hover {
-    background: #080808;
+    background: #CFE6FA;
+    color: #003D73
 }
 
 
@@ -145,3 +146,59 @@ form button:hover {
     border: 1px solid #ccc;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+#searchInput {
+    padding: 10px;
+    width: 250px;
+    border: 2px solid #4cafaf;
+    border-radius: 6px;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    display: block;
+    background: #ffffff;
+    margin-left: auto;  
+    margin-right: auto;  
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: #3b8f8f;
+    box-shadow: 0 0 5px rgba(59, 143, 143, 0.4);
+}
+.updateBtn, .deleteBtn {
+    padding: 8px 12px;
+    margin: 5px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.updateBtn {
+    background: #005EB8;   
+    color: white;
+}
+
+.updateBtn:hover {
+    background: #CFE6FA;   
+    color: #003D73;
+}
+
+.deleteBtn {
+    background: #c0392b;
+    color: white;
+}
+
+.deleteBtn:hover {
+    background: #e74c3c;
+}
+.medicine-item {
+    cursor: pointer;
+}
+
+.actions button {
+    cursor: pointer;
+}
+
+
+

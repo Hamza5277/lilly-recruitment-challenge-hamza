@@ -1,13 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
     fetchMedicines();
 });
+let allMedicines = [];
+
 //function to fetch medicines from backend
 function fetchMedicines() {
     fetch("http://localhost:8000/medicines")
         .then((response) => response.json())
         .then((data) => {
-            displayMedicines(data.medicines);
-        })
+    allMedicines = data.medicines; 
+    displayMedicines(allMedicines);
+})
+
         .catch((error) => {
             console.error("Error fetching medicines:", error);
             document.getElementById("medicineList").innerHTML = "<p>Failed to load medicines.</p>";
@@ -17,15 +21,37 @@ function fetchMedicines() {
 function displayMedicines(medicines) {
     const medicineList = document.getElementById("medicineList");
     medicineList.innerHTML = "";
+
     medicines.forEach((medicine) => {
         const medName = medicine.name || "Unknown Medicine";
         const medPrice = medicine.price !== null ? `$${medicine.price}` : "Price not available";
+
         const medElement = document.createElement("div");
         medElement.className = "medicine-item";
-        medElement.innerHTML = `<strong>${medName}</strong>: ${medPrice}`;
+
+        // Default view
+        medElement.innerHTML = `
+            <strong>${medName}</strong>: ${medPrice}
+            <div class="actions" style="display:none;">
+                <br>
+                <button class="updateBtn" data-name="${medName}">Update</button>
+                <button class="deleteBtn" data-name="${medName}">Delete</button>
+            </div>
+        `;
+
+        // When clicking the medicine toggle the action buttons
+        medElement.addEventListener("click", () => {
+            const actions = medElement.querySelector(".actions");
+            actions.style.display = actions.style.display === "none" ? "block" : "none";
+        });
+
         medicineList.appendChild(medElement);
     });
+
+    attachButtonEvents();
 }
+
+
 document.getElementById("addMedicineForm").addEventListener("submit", (event) => {
     event.preventDefault();
 
@@ -92,3 +118,58 @@ function fetchAveragePrice() {
 document
     .getElementById("averagePriceButton")
     .addEventListener("click", fetchAveragePrice);
+
+document.getElementById("searchInput").addEventListener("input", function () {
+    const query = this.value.toLowerCase();
+
+    const filtered = allMedicines.filter(med => {
+        return med.name && med.name.toLowerCase().includes(query);
+    });
+
+    displayMedicines(filtered);
+});
+function attachButtonEvents() {
+    // DELETE BUTTON
+    document.querySelectorAll(".deleteBtn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const name = btn.dataset.name;
+
+            fetch("http://localhost:8000/delete", {
+                method: "DELETE",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({ name })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message || data.error);
+                fetchMedicines();
+            });
+        });
+    });
+
+    // UPDATE BUTTON
+    document.querySelectorAll(".updateBtn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const name = btn.dataset.name;
+            const newPrice = prompt(`Enter new price for ${name}:`);
+
+            if (!newPrice || isNaN(newPrice) || newPrice <= 0) {
+                alert("Invalid price.");
+                return;
+            }
+
+            fetch("http://localhost:8000/update", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({ name, price: newPrice })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message || data.error);
+                fetchMedicines();
+            });
+        });
+    });
+}
+
+    
