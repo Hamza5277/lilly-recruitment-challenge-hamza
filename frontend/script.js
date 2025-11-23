@@ -17,7 +17,7 @@ function fetchMedicines() {
             document.getElementById("medicineList").innerHTML = "<p>Failed to load medicines.</p>";
         });
 }
-//function to display medicines
+//function to display   medicines
 function displayMedicines(medicines) {
     const medicineList = document.getElementById("medicineList");
     medicineList.innerHTML = "";
