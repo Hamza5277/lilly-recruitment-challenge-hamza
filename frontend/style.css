@@ -1,204 +1,340 @@
-/* ---- Global styles ---- */
-
-/* CSS Reset */
-* {
+/* ===== Base reset ===== */
+*,
+*::before,
+*::after {
     box-sizing: border-box;
-}
-
-/* Body styles */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #dddddd;
-    padding: 0;
     margin: 0;
-    color: #333;
-    padding-top: 30px;
-    text-align: center; /* Center all text content by default */
+    padding: 0;
 }
 
-/* Disclaimer styles */
+/* ===== CSS variables for theme ===== */
+:root {
+    --bg: #f3f5f9;
+    --bg-alt: #ffffff;
+    --border-subtle: #dde1e7;
+    --text-main: #1f2933;
+    --text-muted: #6b7280;
+    --accent: #005EB8;        
+    --accent-light: #CFE6FA;  
+    --accent-dark: #003D73;
+    --danger: #c0392b;
+    --danger-light: #e74c3c;
+    --shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.08);
+    --radius-lg: 16px;
+}
+
+/* ===== Body & app shell ===== */
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: radial-gradient(circle at top left, #e0f2fe 0, #f3f5f9 40%, #edf2ff 100%);
+    color: var(--text-main);
+    min-height: 100vh;
+}
+
+.app-shell {
+    max-width: 1100px;
+    margin: 80px auto 40px;
+    padding: 0 16px 40px;
+}
+
+/* ===== Disclaimer bar ===== */
 .disclaimer {
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
-    background-color: black;
-    color: rgb(255, 255, 255);
+    background: #111827;
+    color: #f9fafb;
     text-align: center;
-    padding: 0.5rem;
+    padding: 6px 12px;
+    font-size: 0.8rem;
     z-index: 1000;
-    font-weight: bold;
-    height: 30px;
-    border-radius: 0 0 10px 10px; /*1 minor change to make the UI more cohesive */
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.4);
 }
 
-/* Header styling */
-header h1 {
-    font-size: 2rem;
-    margin: 20px 0;
-    color: #333;
-    text-align: center;
+/* ===== Header ===== */
+.app-header {
+    margin-bottom: 24px;
 }
 
-/* Medicine list item styling */
-.medicine-item {
-    background: #fff;
-    margin: 10px auto;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 10px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 80%; 
-    max-width: 500px;
+.app-title-group {
+    text-align: left;
 }
 
-/* Form styling */
-form {
-    background: #fff;
-    padding: 20px;
-    margin: 20px auto;
-    border-radius: 10px; 
-    border: 1px solid #ccc;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 80%; 
-    max-width: 500px;
+.app-header h1 {
+    font-size: 2.1rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--accent-dark);
+    margin-bottom: 6px;
 }
 
-form input {
-    display: block;
-    margin: 10px auto;
-    padding: 10px;
-    width: 90%;
-    border: 1px solid #ccc;
-    border-radius: 10px; 
+.app-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted);
 }
 
-form button {
-    padding: 10px 20px;
-    background: #005EB8;
-    color: #fff;
-    border: none;
-    border-radius: 10px; 
-    cursor: pointer;
-    width: 90%; 
-    max-width: 200px;
-    margin: 10px auto;
-    display: block;
-    font-weight: bold;
-    margin-top: 1%;
+/* ===== Layout ===== */
+.app-main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-form button:hover {
-    background: #CFE6FA;
-    color: #003D73
+.app-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr);
+    gap: 20px;
 }
 
+@media (max-width: 800px) {
+    .app-layout {
+        grid-template-columns: 1fr;
+    }
 
-.alert {
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 10px; 
-}
+    .app-title-group {
+        text-align: center;
+    }
 
-.alert-success {
-    background-color: #d4edda;
-    color: #155724;
-}
-
-.alert-error {
-    background-color: #f8d7da;
-    color: #721c24;
-}
-/* Average Price Button Styling */
-#averagePriceButton {
-    padding: 10px 20px;
-    margin: 20px auto;
-    background: #414141;
-    color: #fff;
-    border: none;
-    border-radius: 10px; 
-    cursor: pointer;
-    display: block; 
-    font-size: 1rem;
-    font-weight: bold;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background 0.3s ease-in-out;
+    .app-shell {
+        margin-top: 90px;
+    }
 }
 
-#averagePriceButton:hover {
-    background: #000000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+/* ===== Card base ===== */
+.card {
+    background: var(--bg-alt);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-soft);
+    padding: 18px 20px 20px;
 }
 
-/* Average Price Display Styling */
-#averagePriceDisplay {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-top: 10px;
-    color: #333;
-    background: #f9f9f9;
-    padding: 10px;
-    border-radius: 10px; 
-    width: 80%; 
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-#searchInput {
-    padding: 10px;
-    width: 250px;
-    border: 2px solid #4cafaf;
-    border-radius: 6px;
-    font-size: 16px;
-    margin-top: 10px;
-    margin-bottom: 15px;
-    display: block;
-    background: #ffffff;
-    margin-left: auto;  
-    margin-right: auto;  
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
 }
 
-#searchInput:focus {
+.card-description {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* ===== Form card ===== */
+.form-card form {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-card label {
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+.form-card input {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border-subtle);
+    font-size: 0.9rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    background: #f9fafb;
+}
+
+.form-card input:focus {
     outline: none;
-    border-color: #3b8f8f;
-    box-shadow: 0 0 5px rgba(59, 143, 143, 0.4);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 94, 184, 0.18);
+    background: #ffffff;
 }
-.updateBtn, .deleteBtn {
-    padding: 8px 12px;
-    margin: 5px;
+
+/* ===== Buttons ===== */
+.primary-btn,
+.secondary-btn {
+    padding: 10px 16px;
+    border-radius: 999px;
     border: none;
-    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
     cursor: pointer;
-    font-weight: bold;
+    transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.1s ease;
+    width: fit-content;
+    align-self: flex-start;
+}
+
+.primary-btn {
+    background: var(--accent);
+    color: #ffffff;
+    box-shadow: 0 8px 16px rgba(0, 94, 184, 0.25);
+}
+
+.primary-btn:hover {
+    background: var(--accent-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(0, 61, 115, 0.3);
+}
+
+.secondary-btn {
+    background: #111827;
+    color: #f9fafb;
+}
+
+.secondary-btn:hover {
+    background: #020617;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.35);
+}
+
+/* ===== List card ===== */
+.list-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.medicine-list {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* ===== Medicine item ===== */
+.medicine-item {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 12px 14px;
+    border: 1px solid #e5e7eb;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.08s ease;
+}
+
+.medicine-item:hover {
+    background: #edf5ff;
+    border-color: var(--accent-light);
+    box-shadow: 0 10px 18px rgba(148, 163, 184, 0.3);
+    transform: translateY(-1px);
+}
+
+.medicine-item strong {
+    font-size: 0.95rem;
+}
+
+.medicine-item span {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* Actions under each medicine (update/delete) */
+.actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.updateBtn,
+.deleteBtn {
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.08s ease;
 }
 
 .updateBtn {
-    background: #005EB8;   
+    background: var(--accent);
     color: white;
 }
 
 .updateBtn:hover {
-    background: #CFE6FA;   
-    color: #003D73;
+    background: var(--accent-light);
+    color: var(--accent-dark);
+    transform: translateY(-1px);
 }
 
 .deleteBtn {
-    background: #c0392b;
+    background: var(--danger);
     color: white;
 }
 
 .deleteBtn:hover {
-    background: #e74c3c;
-}
-.medicine-item {
-    cursor: pointer;
+    background: var(--danger-light);
+    transform: translateY(-1px);
 }
 
-.actions button {
-    cursor: pointer;
+/* ===== Search ===== */
+.search-wrapper {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
+.search-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-align: left;
+    color: var(--text-muted);
+}
 
+#searchInput {
+    padding: 9px 12px;
+    width: 100%;
+    max-width: 280px;
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    font-size: 0.9rem;
+    background: #ffffff;
+    margin-left: 0;
+    margin-right: 0;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 94, 184, 0.18);
+}
+
+/* ===== Stats card ===== */
+.stats-card {
+    margin-top: 4px;
+}
+
+.stats-header {
+    margin-bottom: 8px;
+}
+
+.stats-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    justify-content: space-between;
+}
+
+/* Average display */
+.average-display {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px dashed var(--border-subtle);
+    background: #f9fafb;
+    color: var(--text-main);
+}
 

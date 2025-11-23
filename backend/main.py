@@ -125,25 +125,23 @@ def delete_med(name: str = Form(...)):
     return {"error": "Medicine not found"}
 
 # Add your average function here
-@app.get("/average-price-alt2")
-def calculate_average_price_alt2():
+@app.get("/average-price")
+def calculate_average_price():
     data = get_all_meds()
     medicines = data.get("medicines", [])
 
     prices = []
     for med in medicines:
-        price = med.get("price")
-        if isinstance(price, (int, float)) and price is not None:
+        try:
+            price = float(med.get("price"))
             prices.append(price)
+        except (TypeError, ValueError):
+            continue
 
-    if len(prices) == 0:
+    if not prices:
         return {"error": "No valid prices available"}
 
-    total = 0
-    for price in prices:
-        total += price
-
-    average = total / len(prices)
+    average = sum(prices) / len(prices)
     return {"average_price": round(average, 2)}
 
 
